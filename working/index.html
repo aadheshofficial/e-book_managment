@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <title>E-book management</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"> -->
+</head>
+<body ng-app="myApp">
+    <div class="main_body" ng-controller="myController">
+        <div class="main_content">
+            <div class="heading">
+                <h1>E - BOOK MANAGMENT</h1>
+            </div>
+            <div class="main">
+                <div class="content">
+                    <form ng-submit="createOrUpdateBook()" enctype="multipart/form-data">
+                        <div class="element_content">
+                            <label for="book_id">book id :</label>
+                            <input type="number" ng-model="formData.book_id" name="book_id" id="book_id">
+                        </div>
+                        <div class="element_content">
+                            <label for="book_name">book name :</label>
+                            <input type="text" ng-model="formData.book_name" name="book_name" id="book_name">
+                        </div>
+                        <div class="element_content">
+                            <label for="book_author">author :</label>
+                            <input type="text" ng-model="formData.book_author" name="book_author" id="book_author">
+                        </div>
+                        <div class="element_content">
+                            <label for="book_cost">cost :</label>
+                            <input type="number" ng-model="formData.book_cost" name="book_cost" id="book_cost">
+                        </div>
+                        <div class="element_content">
+                            <label for="book_pages">number of pages :</label>
+                            <input type="number" ng-model="formData.book_pages" name="book_pages" id="book_pages">
+                        </div>
+                        <div class="element_content">
+                            <label for="book_total">total no of books :</label>
+                            <input type="number" ng-model="formData.book_total" name="book_total" id="book_total">
+                        </div>
+                        <div class="element_content">
+                            <label for="book_file">Upload PDF:</label>
+                            <input type="file" ng-model="formData.book_file" name="book_file" id="book_file" accept=".pdf">
+                        </div>
+                        <div class="submit_div">
+                            <button id="submit_button" type="submit">Add/Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="scroll">
+                <h1>Scroll to see book list </h1>
+                <!-- <img src="{{ url_for('static', filename='down_arrow.png')}}"> -->
+                <img src="down_arrow.png">
+            </div>
+            
+        </div>
+        <div class="book_list">
+            <div class="element_content heading">
+                <h1>Book List</h1>
+            </div>
+            <div class="search">
+                <label for="search">search</label>
+                <input type="text" ng-model="search_filter" name="search_filter" id="search_filter">
+            </div>
+            <div id="book_table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Book ID</th>
+                            <th>Book Name</th>
+                            <th>Author</th>
+                            <th>Cost</th>
+                            <th>Number of Pages</th>
+                            <th>Total Books</th>
+                            <th>Edit</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="book in bookList | filter: search_filter">
+                            <td>{{ book.book_id }}</td>
+                            <td>{{ book.book_name }}</td>
+                            <td>{{ book.book_author }}</td>
+                            <td>{{ book.book_cost }}</td>
+                            <td>{{ book.book_pages }}</td>
+                            <td>{{ book.book_total }}</td>
+                            <td><button type="button" ng-click="editBook(book)">Edit</button></td>
+                            <td><button type="button" ng-click="removeBook(book)">Remove</button></td>
+                        </tr>
+                        <tr ng-if="!bookList.length">
+                            <td colspan="8" class="empty-row">No data available</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- <script src="{{ url_for('static', filename='app.js')}}"></script> -->
+    <script src="app.js"></script>
+</body>
+</html>
